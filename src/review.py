@@ -68,7 +68,7 @@ def __create_comment(message, path, start_in_line):
         "comment": message.replace("${FILE_PATH}", path),
         "position": {
             "path": path,
-            "snipset": True,
+            'language': 'c++',
             "startInLine": start_in_line,
             "endInLine": start_in_line
         }
