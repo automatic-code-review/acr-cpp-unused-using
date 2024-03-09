@@ -69,7 +69,8 @@ def __create_comment(message, path, start_in_line):
         "position": {
             "path": path,
             "snipset": True,
-            "startInLine": start_in_line
+            "startInLine": start_in_line,
+            "endInLine": start_in_line
         }
     }
 
