@@ -5,6 +5,7 @@ import os
 def review(config):
     diffs = config['merge']['changes']
     path_source = config['path_source']
+    custom_depara = config['custom']
 
     comments = []
 
@@ -33,18 +34,9 @@ def review(config):
                             })
 
                     for using in usings:
-                        found = False
                         using_name = using['name']
 
-                        for linha in linhas:
-                            if linha.startswith("using "):
-                                continue
-
-                            if using_name in linha:
-                                found = True
-                                break
-
-                        if not found:
+                        if not __contains_one(linhas, using_name, custom_depara):
                             comments.append(__create_comment(
                                 message=f"Using {using_name} não utilizado no arquivo {caminho_relativo}",
                                 path=caminho_relativo,
@@ -52,6 +44,30 @@ def review(config):
                             ))
 
     return comments
+
+
+def __contains_one(linhas, using_name, custom_depara):
+    strings_to_compare = __get_strings_to_compare(using_name, custom_depara)
+
+    for linha in linhas:
+        if linha.startswith("using "):
+            continue
+
+        for string_to_compare in strings_to_compare:
+            if string_to_compare in linha:
+                return True
+
+    return False
+
+
+def __get_strings_to_compare(using_name, custom_depara):
+    strings = [using_name]
+
+    for depara in custom_depara:
+        if depara['name'] == using_name:
+            strings.extend(depara['usingBy'])
+
+    return strings
 
 
 def __is_path_in_diff(path, diffs):
