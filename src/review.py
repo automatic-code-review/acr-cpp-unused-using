@@ -64,7 +64,7 @@ def __is_path_in_diff(path, diffs):
 
 def __create_comment(message, path, start_in_line):
     comment = {
-        "id": __generate_md5(message),
+        "id": __generate_md5(f"{message} | {start_in_line} | {path}"),
         "comment": message.replace("${FILE_PATH}", path),
         "position": {
             "path": path,
