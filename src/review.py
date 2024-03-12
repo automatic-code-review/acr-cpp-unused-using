@@ -26,8 +26,13 @@ def review(config):
                     for linha in linhas:
                         current_line += 1
                         if linha.startswith("using "):
-                            parts = linha.split(':')
-                            name = parts[len(parts) - 1].replace("\n", "").replace(";", "")
+                            if '=' in linha:
+                                parts = linha.split('=')
+                                name = parts[0].replace("using ", "").strip()
+                            else:
+                                parts = linha.split(':')
+                                name = parts[len(parts) - 1].replace("\n", "").replace(";", "")
+
                             usings.append({
                                 "name": name,
                                 "startInLine": current_line,
