@@ -25,7 +25,7 @@ def review(config):
                     current_line = 0
                     for linha in linhas:
                         current_line += 1
-                        if linha.startswith("using "):
+                        if linha.startswith("using ") and "=" not in linha:
                             if '=' in linha:
                                 parts = linha.split('=')
                                 name = parts[0].replace("using ", "").strip()
